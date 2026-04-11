@@ -1,0 +1,144 @@
+/* Reset the margin and padding fot all elements and reset box-sizing */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* Colors */
+:root{
+    --sage-deep: #4a5e4a;
+    --sage-mid:   #6b7f5e;
+    --sage-light: #a8b89a;
+    --sage-pale:  #d4dece;
+    --sage-wash:  #eef2ea;
+    --cream:      #f8f6f0;
+    --text-dark:  #2c3328;
+    --text-mid:   #4a5545;
+    --text-light: #7a8c72;
+    --border:     #c8d4bc;
+
+}
+
+body{
+font-family: 'DM Sans', sans-serif; /* sets font to DM sans, and it goes to sans-serif if DM-sans doesn't load */
+background-color : var(--cream);
+color: var(--text-dark);
+min-height: 100vh; /* ensures the body takes up at least the full screen height */
+}
+
+/* Header formatting */
+header {
+    padding: 3.5rem 0 0;
+    text-align: center;
+}
+
+.site-name{
+    font-family: 'Coromorant Garamond', serif;
+    font-size: 3.5rem;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    color: var(--sage-deep);
+    line-height: 1.1;
+}
+
+.tagline{
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    font-weight: 300;
+}
+
+.header-rule{
+    width: 60px;
+    height: 1px;
+    background-color: var(--sage-light);
+    margin: 1.5rem auto 0;
+}
+
+nav{
+    display: flex;
+    justify-content: center;
+    margin-top: 2.2rem;
+    border-bottom: 1px solid var(--border);
+}
+
+nav button{
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'Dm Sans', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    padding: 0.85rem 2rem;
+    position: relative;
+    transition: color 0.25s ease;
+
+}
+
+nav button::after{
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background: var(--sage-mid);
+    transition: width 0.3s ease;
+}
+
+nav button:hover{
+    color: var(--sage-deep);
+}
+
+nav button:hover::after {
+    width: 60%;
+}
+
+nav button.active{
+    color: var(--sage-deep);
+}
+
+nav button.active::after{
+    width: 100%;
+}
+
+/* Main & Tab Panels */
+main{
+    padding: 3.5rem 0 5rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.tab-panel {
+    display: none;
+}
+
+.tab-panel.active {
+    display: block;
+    animation: fadeUp 0.5s ease both;
+}
+
+@keyframes fadeUp{
+    from{ 
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to{
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.site-wrapper{
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
