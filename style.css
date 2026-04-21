@@ -1,188 +1,288 @@
+/* ═══════════════════════════════════════════════
+   TAHER SHAHID — PERSONAL PORTFOLIO
+   Tab-based layout with GSAP transitions
+   ═══════════════════════════════════════════════ */
 
-/* Reset the margin and padding for all elements and reset 
-box-sizing */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* ── RESET ── */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-
-/* Colors. set all the colors to a variable name so do not have
-to reference it every time in the code */
-:root{
-    --sage-deep: #4a5e4a;
-    --sage-mid:   #6b7f5e;
-    --sage-light: #a8b89a;
-    --sage-pale:  #d4dece;
-    --sage-wash:  #eef2ea;
-    --cream:      #f8f6f0;
-    --text-dark:  #2c3328;
-    --text-mid:   #4a5545;
-    --text-light: #7a8c72;
-    --border:     #c8d4bc;
-
+/* ── DESIGN TOKENS ── */
+:root {
+  --sage-deep: #3d5a3d;
+  --sage-mid: #5e7e52;
+  --sage-light: #a8b89a;
+  --sage-pale: #d4dece;
+  --sage-wash: #eef2ea;
+  --cream: #f8f6f0;
+  --text-dark: #2c3328;
+  --text-mid: #4a5545;
+  --text-light: #7a8c72;
+  --border: #c8d4bc;
+  --shadow-soft: 0 8px 32px rgba(74, 94, 74, 0.08);
+  --shadow-med: 0 16px 48px rgba(74, 94, 74, 0.12);
 }
 
-
-/* Set defualt font for the whole website
-  Set background color and text color for the whole website
-  min height makes sure that the body takes up the whole page - no empty */
-body{
-font-family: 'DM Sans', sans-serif; /* sets font to DM sans, and it goes to sans-serif if DM-sans doesn't load */
-background-color : var(--cream);
-color: var(--text-dark);
-min-height: 100vh; /* ensures the body takes up at least the full screen height */
+/* ── GLOBAL ── */
+html, body {
+  height: 100%;
+  overflow: hidden;
 }
 
-
-/* Adds space above the header for aesthetics
-  Center the header
-  padding function: top, left-right, bottom*/
-header {
-    padding: 3.5rem 0 0;
-    text-align: center;
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--text-dark);
+  cursor: none;
 }
 
-
-/* Styles my name at the top of the page
-  Changes the thickness of the letters
-  adds a tiny bit of space in between the letters for aesthetics
-  line height - adds a box around the text so that nothing else can 
-  be shown in that designated space */
-.site-name{
-    font-family: 'Coromorant Garamond', serif;
-    font-size: 3.5rem;
-    font-weight: 300;
-    letter-spacing: 0.04em;
-    color: var(--sage-deep);
-    line-height: 1.1;
+::selection {
+  background: var(--sage-pale);
+  color: var(--sage-deep);
 }
 
-
-/* Styles the text under my .site-name
-  font size, spacing, uppercase, color, and thickness */
-.tagline{
-    margin-top: 0.5rem;
-    font-size: 0.8rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--text-light);
-    font-weight: 300;
+/* ── CUSTOM CURSOR ── */
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  background: var(--sage-deep);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10000;
+  transform: translate(-50%, -50%);
 }
 
-
-/* Creates thin line under the header
-  use the "auto" trick to automatically center the line 
-   - makes it so that no matter the width, the line is always centered*/
-.header-rule{
-    width: 60px;
-    height: 1px;
-    background-color: var(--sage-light);
-    margin: 1.5rem auto 0;
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid var(--sage-mid);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease;
+  opacity: 0.6;
 }
 
-
-/* makes the navigation buttons sit in a horizontal line */
-nav{
-    display: flex;
-    justify-content: center;
-    margin-top: 2.2rem;
-    border-bottom: 1px solid var(--border);
+body:hover .cursor-ring {
+  opacity: 1;
 }
 
-
-/* Replaced default styling with specified styling
-  transitin makes the color change smoothly when hovering over
-  the button*/
-nav button{
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-family: 'Dm Sans', sans-serif;
-    font-size: 0.78rem;
-    font-weight: 500;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--text-light);
-    padding: 0.85rem 2rem;
-    position: relative;
-    transition: color 0.25s ease;
-
-}
-/* adds lines under buttons when you hover over them*/
-nav button::after{
-    content: '';
-    position: absolute;
-    bottom: -1px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 2px;
-    background: var(--sage-mid);
-    transition: width 0.3s ease;
+.cursor-ring.hover {
+  width: 56px;
+  height: 56px;
+  border-color: var(--sage-deep);
+  opacity: 0.3;
 }
 
-
-/* */
-nav button:hover{
-    color: var(--sage-deep);
-}
-
-nav button:hover::after {
-    width: 60%;
-}
-
-nav button.active{
-    color: var(--sage-deep);
-}
-
-nav button.active::after{
-    width: 100%;
-}
-
-/* Main & Tab Panels */
-main{
-    padding: 3.5rem 0 5rem;
-    max-width: 900px;
-    margin: 0 auto;
-}
-
-.tab-panel {
+@media (pointer: coarse) {
+  .cursor-dot,
+  .cursor-ring {
     display: none;
+  }
+  body {
+    cursor: auto;
+  }
+}
+
+/* ── PARTICLE CANVAS ── */
+#particleCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+
+/* ══════════════════════════════════════════════════
+   PAGE WRAPPER — fills viewport exactly
+   ══════════════════════════════════════════════════ */
+.page-wrapper {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ══════════════════════════════════════════════════
+   HEADER
+   ══════════════════════════════════════════════════ */
+#siteHeader {
+  flex-shrink: 0;
+  text-align: center;
+  padding: 2rem 2rem 0;
+  background: radial-gradient(ellipse at 50% 30%, rgba(238, 242, 234, 0.5) 0%, transparent 70%);
+}
+
+.header-content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.header-line {
+  width: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--sage-light), transparent);
+  margin: 0 auto;
+}
+
+.header-line-top {
+  margin-bottom: 1rem;
+}
+
+.header-line-bottom {
+  margin-top: 1rem;
+}
+
+.site-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  font-weight: 300;
+  letter-spacing: 0.06em;
+  color: var(--sage-deep);
+  line-height: 1.1;
+  opacity: 0;
+}
+
+.tagline {
+  margin-top: 0.6rem;
+  font-size: clamp(0.65rem, 1.2vw, 0.8rem);
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-light);
+  font-weight: 400;
+  opacity: 0;
+}
+
+/* ══════════════════════════════════════════════════
+   NAV
+   ══════════════════════════════════════════════════ */
+#mainNav {
+  flex-shrink: 0;
+  background: rgba(248, 246, 240, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.nav-btn {
+  background: none;
+  border: none;
+  cursor: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-light);
+  padding: 0.9rem 2rem;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.nav-btn:hover {
+  color: var(--sage-deep);
+}
+
+.nav-btn.active {
+  color: var(--sage-deep);
+}
+
+.nav-indicator {
+  position: absolute;
+  bottom: -1px;
+  height: 2px;
+  background: var(--sage-mid);
+  transition: left 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+              width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ══════════════════════════════════════════════════
+   CONTENT AREA — fills remaining space
+   ══════════════════════════════════════════════════ */
+.content-area {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* ── Tab Panels ── */
+.tab-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .tab-panel.active {
-    display: block;
-    animation: fadeUp 0.5s ease both;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
 
-
-/* defines the animation for the tab panels when they become active
-  from - starting point of the animation
-  to - ending point of the animation
-  opacity - makes it fade in
-  transform - makes it move up slightly as it fades in */
-@keyframes fadeUp{
-    from{ 
-        opacity: 0;
-        transform: translateY(15px);
-    }
-    to{
-        opacity: 1;
-        transform: translateY(0);
-    }
+.tab-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem 2rem;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  /* Custom scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: var(--sage-light) transparent;
 }
 
-
-/* centers content for entire page*/
-.site-wrapper{
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 0 2rem;
+.tab-inner::-webkit-scrollbar {
+  width: 5px;
 }
 
-/* ── ABOUT ── */
+.tab-inner::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.tab-inner::-webkit-scrollbar-thumb {
+  background: var(--sage-light);
+  border-radius: 10px;
+}
+
+/* Resume tab uses full height for the iframe */
+.tab-inner-resume {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ══════════════════════════════════════════════════
+   ABOUT TAB
+   ══════════════════════════════════════════════════ */
 .about-grid {
   display: grid;
   grid-template-columns: 1fr 1.6fr;
@@ -192,32 +292,38 @@ main{
 
 .about-photo-block {
   position: sticky;
-  top: 2rem;
+  top: 0;
 }
 
-.photo-placeholder {
+.photo-frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.headshot {
   width: 100%;
   aspect-ratio: 3/4;
-  background: linear-gradient(145deg, var(--sage-pale), var(--sage-wash));
-  border-radius: 2px;
+  object-fit: cover;
+  border-radius: 4px;
   border: 1px solid var(--border);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.6rem;
-  color: var(--text-light);
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.photo-caption {
-  margin-top: 1rem;
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--text-light);
-  text-align: center;
+.photo-frame:hover .headshot {
+  transform: scale(1.03);
+}
+
+.photo-shimmer {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+  transform: skewX(-15deg);
+  pointer-events: none;
 }
 
 .about-text h2 {
@@ -229,194 +335,41 @@ main{
   margin-bottom: 1.5rem;
 }
 
+.about-text h2 em {
+  font-style: normal;
+  position: relative;
+}
+
+.about-text h2 em::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 0;
+  width: 100%;
+  height: 8px;
+  background: var(--sage-pale);
+  z-index: -1;
+  opacity: 0.6;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.4s;
+}
+
+.about-text h2.animate em::after {
+  transform: scaleX(1);
+}
+
 .about-text p {
   font-size: 0.95rem;
   line-height: 1.85;
   color: var(--text-mid);
-  margin-bottom: 1.2rem;
+  margin-bottom: 1.4rem;
   font-weight: 300;
 }
 
-.about-details {
-  margin-top: 2rem;
-  padding-top: 2rem;
-  border-top: 1px solid var(--border);
-  display: flex;
-  flex-direction: column;
-  gap: 0.65rem;
-}
-
-.detail-row {
-  display: flex;
-  gap: 1rem;
-  font-size: 0.82rem;
-}
-
-.detail-label {
-  color: var(--text-light);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  font-size: 0.7rem;
-  min-width: 90px;
-  padding-top: 0.1rem;
-}
-
-.detail-value {
-  color: var(--text-mid);
-}
-
-/* ── RESEARCH ── */
-.section-header {
-  margin-bottom: 2.5rem;
-}
-
-.section-header h2 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 2rem;
-  font-weight: 300;
-  color: var(--sage-deep);
-}
-
-.research-quote {
-  position: relative;
-  padding: 2.5rem 3rem;
-  background: var(--sage-wash);
-  border-left: 3px solid var(--sage-light);
-  margin-bottom: 4rem;
-}
-
-.quote-mark {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 6rem;
-  line-height: 0;
-  color: var(--sage-light);
-  position: absolute;
-  top: 3rem;
-  left: 1rem;
-  opacity: 0.5;
-}
-
-blockquote {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.3rem;
-  font-weight: 300;
-  font-style: italic;
-  line-height: 1.8;
-  color: var(--text-mid);
-  margin-bottom: 1.2rem;
-}
-
-.quote-author {
-  font-size: 0.78rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text-light);
-}
-
-.research-statement p {
-  font-size: 0.95rem;
-  line-height: 1.85;
-  color: var(--text-mid);
-  font-weight: 300;
-  margin-bottom: 1.2rem;
-  max-width: 680px;
-}
-
-/* ── RESUME ── */
-.resume-area {
-  border: 2px dashed var(--border);
-  border-radius: 4px;
-  padding: 5rem 3rem;
-  text-align: center;
-  background: var(--sage-wash);
-  transition: border-color 0.3s, background 0.3s;
-}
-
-.resume-area:hover {
-  border-color: var(--sage-light);
-  background: var(--warm-white);
-}
-
-.resume-icon {
-  width: 52px;
-  height: 52px;
-  margin: 0 auto 1.2rem;
-  color: var(--sage-light);
-  display: block;
-}
-
-.resume-area h3 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.6rem;
-  font-weight: 300;
-  color: var(--sage-deep);
-  margin-bottom: 0.5rem;
-}
-
-.resume-area p {
-  font-size: 0.84rem;
-  color: var(--text-light);
-  line-height: 1.7;
-  font-weight: 300;
-  max-width: 380px;
-  margin: 0 auto;
-}
-
-.resume-hint {
-  margin-top: 1.5rem;
-  font-size: 0.72rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--sage-light);
-}
-
-/* ── FOOTER ── */
-footer {
-  text-align: center;
-  padding: 2rem 0 3rem;
-  border-top: 1px solid var(--border);
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text-light);
-}
-
-/* ── RESPONSIVE ── */
-@media (max-width: 620px) {
-
-  .about-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .about-photo-block {
-    position: static;
-    max-width: 240px;
-    margin: 0 auto;
-  }
-
-  nav button {
-    padding: 0.85rem 1.2rem;
-    font-size: 0.72rem;
-  }
-
-  .site-name {
-    font-size: 2.4rem;
-  }
-
-  .research-quote {
-    padding: 2rem 1.5rem;
-  }
-
-  blockquote {
-    font-size: 1.1rem;
-  }
-
-}
-
-/* ── ABOUT QUOTE ── */
 .about-quote {
   margin: 1.8rem 0;
-  padding-left: 1.2rem;
+  padding-left: 1.5rem;
   border-left: 2px solid var(--sage-pale);
 }
 
@@ -430,7 +383,7 @@ footer {
 }
 
 .about-quote-author {
-  margin-top: 0.5rem;
+  margin-top: 0.6rem;
   font-size: 0.72rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -438,11 +391,186 @@ footer {
   opacity: 0.7;
 }
 
-.headshot {
+/* ══════════════════════════════════════════════════
+   RESEARCH TAB
+   ══════════════════════════════════════════════════ */
+.research-quote {
+  position: relative;
+  padding: 2.5rem 3rem;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+  border-left: 3px solid var(--sage-light);
+  margin-bottom: 3rem;
+  border-radius: 0 8px 8px 0;
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+}
+
+.research-quote::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  aspect-ratio: 3/4;
-  object-fit: cover;
-  border-radius: 2px;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(168, 184, 154, 0.05) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+.quote-mark {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 6rem;
+  line-height: 0;
+  color: var(--sage-light);
+  position: absolute;
+  top: 3rem;
+  left: 1rem;
+  opacity: 0.3;
+}
+
+blockquote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.8;
+  color: var(--text-mid);
+  margin-bottom: 1rem;
+}
+
+.quote-author {
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-light);
+}
+
+.section-header {
+  margin-bottom: 2rem;
+}
+
+.section-header h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--sage-deep);
+}
+
+.section-header p {
+  font-size: 0.85rem;
+  color: var(--text-light);
+  margin-top: 0.3rem;
+  font-weight: 300;
+}
+
+.header-accent {
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--sage-mid), transparent);
+  margin-top: 0.8rem;
+}
+
+.research-statement p {
+  font-size: 0.95rem;
+  line-height: 1.85;
+  color: var(--text-mid);
+  font-weight: 300;
+  margin-bottom: 1.2rem;
+  max-width: 680px;
+}
+
+/* ══════════════════════════════════════════════════
+   RESUME TAB
+   ══════════════════════════════════════════════════ */
+.resume-embed {
+  flex: 1;
+  min-height: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--shadow-med);
   border: 1px solid var(--border);
+  background: white;
+}
+
+.resume-embed iframe {
   display: block;
+  border: none;
+  width: 100%;
+  height: 100%;
+}
+
+/* ══════════════════════════════════════════════════
+   FOOTER
+   ══════════════════════════════════════════════════ */
+footer {
+  flex-shrink: 0;
+  text-align: center;
+  padding: 0.8rem 2rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-light);
+}
+
+/* ══════════════════════════════════════════════════
+   ANIMATION HELPERS
+   ══════════════════════════════════════════════════ */
+.anim-item {
+  opacity: 0;
+  transform: translateY(30px);
+  will-change: transform, opacity;
+}
+
+.anim-heading {
+  opacity: 0;
+  transform: translateY(25px);
+  will-change: transform, opacity;
+}
+
+/* ══════════════════════════════════════════════════
+   RESPONSIVE
+   ══════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .about-photo-block {
+    position: static;
+    max-width: 220px;
+    margin: 0 auto;
+  }
+
+  .tab-inner {
+    padding: 1.5rem 1.2rem;
+  }
+
+  .research-quote {
+    padding: 1.8rem 1.5rem;
+  }
+
+  blockquote {
+    font-size: 1.1rem;
+  }
+
+  .nav-btn {
+    padding: 0.85rem 1.2rem;
+    font-size: 0.72rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .site-name {
+    font-size: 2.4rem;
+  }
+
+  .about-text h2 {
+    font-size: 1.8rem;
+  }
+
+  .section-header h2 {
+    font-size: 1.6rem;
+  }
 }
