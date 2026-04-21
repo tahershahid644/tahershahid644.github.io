@@ -306,7 +306,7 @@ body:hover .cursor-ring {
   aspect-ratio: 3/4;
   object-fit: cover;
   border-radius: 4px;
-  border: 1px solid var(--border);
+  border: 1.5px solid var(--sage-deep);
   display: block;
   transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
