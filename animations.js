@@ -55,7 +55,7 @@
   window.addEventListener('resize', resize);
 
   const particles = [];
-  const COUNT = 35;
+  const COUNT = 75;
 
   for (let i = 0; i < COUNT; i++) {
     particles.push({
@@ -91,11 +91,11 @@
         const dx = particles[i].x - particles[j].x;
         const dy = particles[i].y - particles[j].y;
         const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 140) {
+        if (dist < 160) {
           ctx.beginPath();
           ctx.moveTo(particles[i].x, particles[i].y);
           ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = `rgba(168, 184, 154, ${0.08 * (1 - dist / 140)})`;
+          ctx.strokeStyle = `rgba(168, 184, 154, ${0.12 * (1 - dist / 160)})`;
           ctx.lineWidth = 0.5;
           ctx.stroke();
         }
