@@ -166,7 +166,7 @@ document.querySelectorAll('.nav-btn').forEach(btn => {
 // ──────────────────────────────────────────────
 let currentTab = 'about';
 let isTransitioning = false;
-const tabOrder = ['about', 'research', 'resume'];
+const tabOrder = ['about', 'research', 'activities', 'resume'];
 
 function getDirection(from, to) {
   return tabOrder.indexOf(to) > tabOrder.indexOf(from) ? 1 : -1;
