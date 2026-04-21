@@ -193,12 +193,6 @@ function animateTabIn(panel, direction) {
       { opacity: 1, x: 0, scale: 1, duration: 0.7 },
       '-=0.35'
     );
-
-    // Shimmer effect
-    const shimmer = photo.querySelector('.photo-shimmer');
-    if (shimmer) {
-      tl.fromTo(shimmer, { left: '-100%' }, { left: '200%', duration: 1.2, ease: 'power2.inOut' }, '-=0.3');
-    }
   }
 
   // Heading
