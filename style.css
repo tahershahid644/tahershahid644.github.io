@@ -38,9 +38,12 @@ body {
   font-family: 'DM Sans', sans-serif;
   background-color: var(--cream);
   background-image: 
+    linear-gradient(rgba(168, 184, 154, 0.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(168, 184, 154, 0.15) 1px, transparent 1px),
     radial-gradient(circle at 10% 40%, rgba(94, 126, 82, 0.09), transparent 45%),
     radial-gradient(circle at 90% 70%, rgba(61, 90, 61, 0.07), transparent 45%),
     radial-gradient(circle at 50% -10%, rgba(168, 184, 154, 0.12), transparent 50%);
+  background-size: 40px 40px, 40px 40px, 100% 100%, 100% 100%, 100% 100%;
   background-attachment: fixed;
   color: var(--text-dark);
   cursor: none;
@@ -366,10 +369,10 @@ body:hover .cursor-ring {
 }
 
 .about-text p {
-  font-size: 1.05rem;
-  line-height: 1.9;
-  color: var(--text-dark);
-  margin-bottom: 1.6rem;
+  font-size: 0.95rem;
+  line-height: 1.85;
+  color: var(--text-mid);
+  margin-bottom: 1.4rem;
   font-weight: 400;
   letter-spacing: 0.01em;
 }
